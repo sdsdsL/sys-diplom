@@ -1,0 +1,28 @@
+#cloud-config
+users:
+ - name: ansible
+   groups: sudo
+   shell: /bin/bash
+   sudo: ['ALL=(ALL) NOPASSWD:ALL']
+   ssh-authorized-keys:
+     - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwjW1XoEfU1b6krtqxBE11GK0HsgUd7kRKoug7z+ppU
+
+disable_root: true
+timezone: Europe/Moscow
+repo_update: true
+repo_upgrade: true
+
+dnf:
+  preserve_sources_list: true
+
+packages:
+ - wget
+ - nano
+
+runcmd:
+ - [sh, -c, "wget -P /tmp/ https://www.dropbox.com/s/yru6zh8hyxg83yq/kibana-8.6.2-x86_64.rpm"]
+ - [sh, -c, "rpm --install  /tmp/kibana-8.6.2-x86_64.rpm"]
+ 
+ - [systemctl, daemon-reload]
+ - [systemctl, enable, kibana.service]
+ - [systemctl, start, --no-block, kibana.service]
