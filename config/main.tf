@@ -6,11 +6,11 @@ terraform {
   }
 }
 
-provider "yandex" {
-  token     = "var.token"
-  cloud_id  = "b1go55vjm0n467kopjv1"
-  folder_id = "b1gghnkhlgdsdv9ko106"
-  zone      = "ru-central1-a"
+provider yandex {
+  service_account_key_file = "../../../secrets/key.json"
+  cloud_id		   = var.yandex_cloud_id
+  folder_id 		   = var.yandex_folder_id
+  zone			   = "ru-central1-a"
 }
 
 # Web Server 1
